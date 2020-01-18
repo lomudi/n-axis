@@ -52,9 +52,30 @@ void imuquat(OSCMessage &msg)
   float roatationAnd = msg.getFloat(0); // when battry is up - left +, right -
   float sideAng = msg.getFloat(1); // when battry is up - left +, right -
   float pitchAng = msg.getFloat(2); // when battry is up - back -, fornt +
-  Serial.println(String(msg.getFloat(0)) + " , " + msg.getFloat(1) + " , " + msg.getFloat(2));
 
-  
+  if (sideAng > 90) {
+    Serial.print("most left side, relay 1");
+    /*
+     * EDEN - write your code here for the most left relay, num 1 (when battry is up)
+     */
+  } else if (sideAng > 0 && sideAng <= 90) {
+    Serial.print("helf left side, relay 2");
+    /*
+     * EDEN - write your code here for the second relay from the left, num 2 (when battry is up)
+     */
+  } else if (sideAng < 0 && sideAng >= -90) {
+    Serial.print("helf right side, relay 3");
+    /*
+     * EDEN - write your code here for the scond relay from the right, num 3 (when battry is up)
+     */
+  } else if (sideAng < -90) {
+    Serial.print("most right side, relay 4");
+    /*
+     * EDEN - write your code here for the most right relay, num 4 (when battry is up)
+     */
+  } else {
+    Serial.print("no side, doing nothing");
+  }
 }
 
 void loop()
