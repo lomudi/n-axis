@@ -17,18 +17,33 @@ const unsigned int outPort = 9999;      // remote port (not needed for receive)
 const unsigned int localPort = 8888;    // local port to listen for UDP packets (here's where we send the packets)
 OSCErrorCode error;
 
+
+//--- Position Pins----//
+int sol_L_1 = 12;
+int sol_L_2 = 27;
+int sol_R_3 = 33;
+int sol_R_4 = 15;
+
+
 void setup()
 {
-  //pinMode(BUILTIN_LED, OUTPUT);
-  ///digitalWrite(BUILTIN_LED, ledState);    // turn *on* led
+
   Serial.begin(115200);
-  // Connect to WiFi network
-  Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, pass);
-  while (WiFi.status() != WL_CONNECTED)
+
+  //---setting pins as uptputs---/
+    pinMode(sol_L_1,OUTPUT);
+    pinMode(sol_L_2,OUTPUT);
+    pinMode(sol_R_3,OUTPUT);
+    pinMode(sol_R_4,OUTPUT);
+
+
+    // Connect to WiFi network
+    Serial.println();
+    Serial.println();
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+    WiFi.begin(ssid, pass);
+    while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
     Serial.print(".");
@@ -54,27 +69,42 @@ void imuquat(OSCMessage &msg)
   float pitchAng = msg.getFloat(2); // when battry is up - back -, fornt +
 
   if (sideAng > 90) {
-    Serial.print("most left side, relay 1");
-    /*
-     * EDEN - write your code here for the most left relay, num 1 (when battry is up)
-     */
-  } else if (sideAng > 0 && sideAng <= 90) {
-    Serial.print("helf left side, relay 2");
-    /*
-     * EDEN - write your code here for the second relay from the left, num 2 (when battry is up)
-     */
-  } else if (sideAng < 0 && sideAng >= -90) {
-    Serial.print("helf right side, relay 3");
-    /*
-     * EDEN - write your code here for the scond relay from the right, num 3 (when battry is up)
-     */
-  } else if (sideAng < -90) {
-    Serial.print("most right side, relay 4");
-    /*
-     * EDEN - write your code here for the most right relay, num 4 (when battry is up)
-     */
-  } else {
-    Serial.print("no side, doing nothing");
+    Serial.println("most left side, relay 1");
+    digitalWrite(sol_L_1, HIGH);
+    digitalWrite(sol_L_2, LOW);
+    digitalWrite(sol_R_4, LOW);
+     digitalWrite(sol_R_4, LOW);
+  }
+
+  else if (sideAng > 0 && sideAng <= 90) {
+    Serial.println("helf left side, relay 2");
+    digitalWrite(sol_L_1, LOW);
+    digitalWrite(sol_L_2, HIGH);
+    digitalWrite(sol_R_4, LOW);
+    digitalWrite(sol_R_4, LOW);
+  }
+
+  else if (sideAng < 0 && sideAng >= -90) {
+    Serial.println("helf right side, relay 3");
+    digitalWrite(sol_L_1, LOW);
+    digitalWrite(sol_L_2, LOW);
+    digitalWrite(sol_R_4, HIGH);
+    digitalWrite(sol_R_4, LOW);
+  }
+
+  else if (sideAng < -90) {
+    Serial.println("most right side, relay 4");
+    digitalWrite(sol_L_1, LOW);
+    digitalWrite(sol_L_2, LOW);
+    digitalWrite(sol_R_4, LOW);
+    digitalWrite(sol_R_4, HIGH);
+  }
+  else {
+    Serial.println("no side, doing nothing");
+    digitalWrite(sol_L_1, LOW);
+    digitalWrite(sol_L_2, LOW);
+    digitalWrite(sol_R_4, LOW);
+    digitalWrite(sol_R_4, LOW);
   }
 }
 
@@ -93,7 +123,6 @@ void handleMsg()
     //change the wihle to be until the size of arry
     while (size--)
     {
-
       msg.fill(Udp.read());
     }
     if (!msg.hasError())

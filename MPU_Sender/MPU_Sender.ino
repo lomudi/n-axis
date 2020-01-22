@@ -1,4 +1,4 @@
-/*
+/* ============================================
 I2Cdev device library code is placed under the MIT license
 Copyright (c) 2012 Jeff Rowberg
 
@@ -33,7 +33,8 @@ THE SOFTWARE.
   GND     G             Ground
   SCL     D1 (GPIO05)   I2C clock
   SDA     D2 (GPIO04)   I2C data
-  XDA     not connected
+  XDA     not connecte
+  d
   XCL     not connected
   AD0     not connected
   INT     D8 (GPIO15)   Interrupt pin
@@ -135,7 +136,8 @@ VectorFloat gravity;    // [x, y, z]            gravity vector
 float euler[3];         // [psi, theta, phi]    Euler angle container
 #endif
 #ifdef OUTPUT_READABLE_YAWPITCHROLL
-float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
+float ypr[3];           // [yaw,
+pitch, roll]   yaw/pitch/roll container and gravity vector
 #endif
 
 #define INTERRUPT_PIN 15 // use pin 15 on ESP8266
@@ -144,7 +146,7 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 const char DEVICE_NAME[] = "mpu6050";
 
 WiFiUDP Udp;                                // A UDP instance to let us send and receive packets over UDP
-const IPAddress outIp(192,168,55,135);            // remote IP to receive OSC
+const IPAddress outIp(192,168,55,103);            // remote IP to receive OSC
 const unsigned int outPort = 8888;          // remote port to receive OSC
 
 // ================================================================
@@ -223,7 +225,7 @@ void setup(void)
   //Local intialization. Once its business is done, there is no need to keep it around
   WiFiManager wifiManager;
   //reset saved settings
-  //wifiManager.resetSettings();
+  //wifiManager.resetSettings();/// inorder to config new Wifi 
 
   //fetches ssid and pass from eeprom and tries to connect
   //if it does not connect it starts an access point with the specified name
