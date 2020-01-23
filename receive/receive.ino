@@ -19,10 +19,10 @@ OSCErrorCode error;
 
 
 //--- Position Pins----//
-int sol_L_1 = 12;
-int sol_L_2 = 27;
-int sol_R_3 = 33;
-int sol_R_4 = 15;
+int sol_L_1 = 26;
+int sol_L_2 = 25;
+int sol_R_3 = 34;
+int sol_R_4 = 39;
 
 
 void setup()

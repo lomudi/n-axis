@@ -146,7 +146,7 @@ pitch, roll]   yaw/pitch/roll container and gravity vector
 const char DEVICE_NAME[] = "mpu6050";
 
 WiFiUDP Udp;                                // A UDP instance to let us send and receive packets over UDP
-const IPAddress outIp(192,168,55,103);            // remote IP to receive OSC
+const IPAddress outIp(192,168,55,145);            // remote IP to receive OSC
 const unsigned int outPort = 8888;          // remote port to receive OSC
 
 // ================================================================
