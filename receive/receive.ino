@@ -19,10 +19,10 @@ OSCErrorCode error;
 
 
 //--- Position Pins----//
-int sol_L_1 = 26;
-int sol_L_2 = 25;
-int sol_R_3 = 34;
-int sol_R_4 = 39;
+int relay4 = 4;
+int relay3 = 12;
+int relay2 = 14;
+int relay1 = 16;
 
 
 void setup()
@@ -31,10 +31,10 @@ void setup()
   Serial.begin(115200);
 
   //---setting pins as uptputs---/
-    pinMode(sol_L_1,OUTPUT);
-    pinMode(sol_L_2,OUTPUT);
-    pinMode(sol_R_3,OUTPUT);
-    pinMode(sol_R_4,OUTPUT);
+  pinMode(relay1, OUTPUT);
+  pinMode(relay2, OUTPUT);
+  pinMode(relay3, OUTPUT);
+  pinMode(relay4, OUTPUT);
 
 
     // Connect to WiFi network
@@ -64,49 +64,55 @@ void setup()
 
 void imuquat(OSCMessage &msg)
 {
+   ///---- sET ALL PINS TO LOW IN WHEN WE STRAT----///
+   digitalWrite(relay1, LOW
+   );
+   digitalWrite(relay2, LOW);
+   digitalWrite(relay3, LOW);
+   digitalWrite(relay4, LOW);
+
+   
   float roatationAnd = msg.getFloat(0); // when battry is up - left +, right -
   float sideAng = msg.getFloat(1); // when battry is up - left +, right -
   float pitchAng = msg.getFloat(2); // when battry is up - back -, fornt +
-
-  Serial.println("sideAng = " + String(sideAng));
   
-  if (sideAng >= 41 && sideAng <= 90) {
+  if (sideAng >= 90 && sideAng <= 180) {
     Serial.println("most left side, relay 1");
-    digitalWrite(sol_L_1, HIGH);
-    digitalWrite(sol_L_2, LOW);
-    digitalWrite(sol_R_3, LOW);
-    digitalWrite(sol_R_4, LOW);
+    digitalWrite(relay1, HIGH);
+    digitalWrite(relay2, LOW);
+    digitalWrite(relay3, LOW);
+     digitalWrite(relay4, LOW);
   }
 
-  else if (sideAng >= 15 && sideAng <= 40) {
+  else if (sideAng >= 0 && sideAng <= 90) {
     Serial.println("helf left side, relay 2");
-    digitalWrite(sol_L_1, LOW);
-    digitalWrite(sol_L_2, HIGH);
-    digitalWrite(sol_R_3, LOW);
-    digitalWrite(sol_R_4, LOW);
+    digitalWrite(relay1, LOW);
+    digitalWrite(relay2, HIGH);
+    digitalWrite(relay3, LOW);
+    digitalWrite(relay4, LOW);
   }
 
-  else if (sideAng <= -15 && sideAng >= -40) {
+  else if (sideAng <= 0 && sideAng >= -90) {
     Serial.println("helf right side, relay 3");
-    digitalWrite(sol_L_1, LOW);
-    digitalWrite(sol_L_2, LOW);
-    digitalWrite(sol_R_3, HIGH);
-    digitalWrite(sol_R_4, LOW);
+    digitalWrite(relay1, LOW);
+    digitalWrite(relay2, LOW);
+    digitalWrite(relay3, HIGH);
+    digitalWrite(relay4, LOW);
   }
 
-  else if (sideAng <= -41 && sideAng >= -90) {
+  else if (sideAng <= -90 && sideAng >= -180) {
     Serial.println("most right side, relay 4");
-    digitalWrite(sol_L_1, LOW);
-    digitalWrite(sol_L_2, LOW);
-    digitalWrite(sol_R_3, LOW);
-    digitalWrite(sol_R_4, HIGH);
+    digitalWrite(relay1, LOW);
+    digitalWrite(relay2, LOW);
+    digitalWrite(relay3, LOW);
+    digitalWrite(relay4, HIGH);
   }
   else {
     Serial.println("no side, doing nothing");
-    digitalWrite(sol_L_1, LOW);
-    digitalWrite(sol_L_2, LOW);
-    digitalWrite(sol_R_3, LOW);
-    digitalWrite(sol_R_4, LOW);
+    digitalWrite(relay1, LOW);
+    digitalWrite(relay2, LOW);
+    digitalWrite(relay3, LOW);
+    digitalWrite(relay4, LOW);
   }
 }
 
