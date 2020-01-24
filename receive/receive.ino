@@ -67,43 +67,45 @@ void imuquat(OSCMessage &msg)
   float roatationAnd = msg.getFloat(0); // when battry is up - left +, right -
   float sideAng = msg.getFloat(1); // when battry is up - left +, right -
   float pitchAng = msg.getFloat(2); // when battry is up - back -, fornt +
+
+  Serial.println("sideAng = " + String(sideAng));
   
-  if (sideAng >= 90 && sideAng <= 180) {
+  if (sideAng >= 41 && sideAng <= 90) {
     Serial.println("most left side, relay 1");
     digitalWrite(sol_L_1, HIGH);
     digitalWrite(sol_L_2, LOW);
+    digitalWrite(sol_R_3, LOW);
     digitalWrite(sol_R_4, LOW);
-     digitalWrite(sol_R_4, LOW);
   }
 
-  else if (sideAng >= 0 && sideAng <= 90) {
+  else if (sideAng >= 15 && sideAng <= 40) {
     Serial.println("helf left side, relay 2");
     digitalWrite(sol_L_1, LOW);
     digitalWrite(sol_L_2, HIGH);
-    digitalWrite(sol_R_4, LOW);
+    digitalWrite(sol_R_3, LOW);
     digitalWrite(sol_R_4, LOW);
   }
 
-  else if (sideAng <= 0 && sideAng >= -90) {
+  else if (sideAng <= -15 && sideAng >= -40) {
     Serial.println("helf right side, relay 3");
     digitalWrite(sol_L_1, LOW);
     digitalWrite(sol_L_2, LOW);
-    digitalWrite(sol_R_4, HIGH);
+    digitalWrite(sol_R_3, HIGH);
     digitalWrite(sol_R_4, LOW);
   }
 
-  else if (sideAng <= -90 && sideAng >= -180) {
+  else if (sideAng <= -41 && sideAng >= -90) {
     Serial.println("most right side, relay 4");
     digitalWrite(sol_L_1, LOW);
     digitalWrite(sol_L_2, LOW);
-    digitalWrite(sol_R_4, LOW);
+    digitalWrite(sol_R_3, LOW);
     digitalWrite(sol_R_4, HIGH);
   }
   else {
     Serial.println("no side, doing nothing");
     digitalWrite(sol_L_1, LOW);
     digitalWrite(sol_L_2, LOW);
-    digitalWrite(sol_R_4, LOW);
+    digitalWrite(sol_R_3, LOW);
     digitalWrite(sol_R_4, LOW);
   }
 }
