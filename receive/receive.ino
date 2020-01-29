@@ -27,7 +27,7 @@ int relay1 = 16;
 
 void setup()
 {
-
+    
   Serial.begin(115200);
 
   //---setting pins as uptputs---/
@@ -35,6 +35,11 @@ void setup()
   pinMode(relay2, OUTPUT);
   pinMode(relay3, OUTPUT);
   pinMode(relay4, OUTPUT);
+  
+  digitalWrite(relay1, HIGH);
+  digitalWrite(relay2, HIGH);
+  digitalWrite(relay3, HIGH);
+  digitalWrite(relay4, HIGH);
 
 
     // Connect to WiFi network
@@ -64,12 +69,14 @@ void setup()
 
 void imuquat(OSCMessage &msg)
 {
+
+    
+    
    ///---- sET ALL PINS TO LOW IN WHEN WE STRAT----///
-   digitalWrite(relay1, LOW
-   );
-   digitalWrite(relay2, LOW);
-   digitalWrite(relay3, LOW);
-   digitalWrite(relay4, LOW);
+   digitalWrite(relay1, HIGH);
+   digitalWrite(relay2, HIGH);
+   digitalWrite(relay3, HIGH);
+   digitalWrite(relay4, HIGH);
 
    
   float roatationAnd = msg.getFloat(0); // when battry is up - left +, right -
@@ -78,41 +85,41 @@ void imuquat(OSCMessage &msg)
   
   if (sideAng >= 41 && sideAng <= 90) {
     Serial.println("most left side, relay 1");
-    digitalWrite(relay1, HIGH);
-    digitalWrite(relay2, LOW);
-    digitalWrite(relay3, LOW);
-     digitalWrite(relay4, LOW);
+    digitalWrite(relay1, LOW);
+    digitalWrite(relay2, HIGH);
+    digitalWrite(relay3, HIGH);
+     digitalWrite(relay4, HIGH);
   }
 
   else if (sideAng >= 10 && sideAng <= 40) {
     Serial.println("helf left side, relay 2");
-    digitalWrite(relay1, LOW);
-    digitalWrite(relay2, HIGH);
-    digitalWrite(relay3, LOW);
-    digitalWrite(relay4, LOW);
+    digitalWrite(relay1, HIGH);
+    digitalWrite(relay2, LOW);
+    digitalWrite(relay3, HIGH);
+    digitalWrite(relay4, HIGH);
   }
 
   else if (sideAng <= -10 && sideAng >= -40) {
     Serial.println("helf right side, relay 3");
-    digitalWrite(relay1, LOW);
-    digitalWrite(relay2, LOW);
-    digitalWrite(relay3, HIGH);
-    digitalWrite(relay4, LOW);
+    digitalWrite(relay1, HIGH);
+    digitalWrite(relay2, HIGH);
+    digitalWrite(relay3, LOW);
+    digitalWrite(relay4, HIGH);
   }
 
   else if (sideAng <= -41 && sideAng >= -90) {
     Serial.println("most right side, relay 4");
-    digitalWrite(relay1, LOW);
-    digitalWrite(relay2, LOW);
-    digitalWrite(relay3, LOW);
-    digitalWrite(relay4, HIGH);
+    digitalWrite(relay1, HIGH);
+    digitalWrite(relay2, HIGH);
+    digitalWrite(relay3, HIGH);
+    digitalWrite(relay4, LOW);
   }
   else {
     Serial.println("no side, doing nothing");
-    digitalWrite(relay1, LOW);
-    digitalWrite(relay2, LOW);
-    digitalWrite(relay3, LOW);
-    digitalWrite(relay4, LOW);
+    digitalWrite(relay1, HIGH);
+    digitalWrite(relay2, HIGH);
+    digitalWrite(relay3, HIGH);
+    digitalWrite(relay4, HIGH);
   }
 }
 
